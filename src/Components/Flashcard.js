@@ -17,6 +17,7 @@ function Flashcard({ languageApp, flashGet, selectedSet, setSelectedSet }) {
 
   const handleSetClick = (index) => {
     setSelectedSet(sets[index]);
+    console.log(selectedSet);
     navigate('/flashcardset')
   };
 
@@ -25,6 +26,7 @@ function Flashcard({ languageApp, flashGet, selectedSet, setSelectedSet }) {
       {sets.map((set, index) => (
         <button key={index} onClick={() => handleSetClick(index)}>
           {index * 10 + 1}-{(index + 1) * 10}
+          {console.log(set)}
           {/* {selectedSet && <FlashcardSet flashcards={selectedSet} />} */}
         </button>
       ))}

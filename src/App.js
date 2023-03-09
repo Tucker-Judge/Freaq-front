@@ -28,12 +28,13 @@ function App() {
 
   useEffect(() => {
     let userLang = navigator.language || navigator.userLanguage;
-    if (user && user.language) {
-      setLanguageApp(user.language);
-    } else {
+    if (userLang) {
       setLanguageApp(userLang);
     }
-  }, [user]);
+    else {
+      setLanguageApp("en-US")
+    }
+  }, []);
   // to implement this
   // 
   // i want them divisible by 10
@@ -72,15 +73,15 @@ const [selectedSet, setSelectedSet] = useState(null);
   
     {
       path:"/*",
-      element: <h1>404 not found</h1>
+      element: <h1>{translations[languageApp][0]}</h1>
     },
     {
       path:"/login",
       element: 
       <div>
-    <NavBar />
+      <NavBar languageApp={languageApp}/>
       <Login setUser={setUser} user={user} />
-      <Footer languageApp={languageApp}/>
+      <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
       </div>
     },
     
@@ -89,54 +90,55 @@ const [selectedSet, setSelectedSet] = useState(null);
       // element: <Home user={user}/>
       element: 
       <div>
-        <NavBar />
-        <AboutUs /> 
-        <Footer languageApp={languageApp}/>
+        <NavBar languageApp={languageApp} user={user}/>
+        <AboutUs languageApp={languageApp}/> 
+        <Signup languageApp={languageApp}/>
+        <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
       </div>
     },
     {
       path: "/addlanguages",
       element:
     <div>
-      <NavBar />
+          <NavBar languageApp={languageApp}/>
       <LanguagePicker user = {user} userLanguages={userLanguages} setUserLanguages={setUserLanguages}/>
-      <Footer languageApp={languageApp}/>
+      <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
     </div>
     },
       {
         path: "/languages",
         element: 
         <div>
-          <NavBar />
-          <UserLanguages user = {user} lessons = {lessons}  setLessons = {setLessons} setLanguageSub = {setLanguageSub}/>
-          <Footer languageApp={languageApp}/>
+          <NavBar languageApp={languageApp}/>
+          <UserLanguages user = {user} lessons = {lessons}  setLessons = {setLessons} setLanguageSub = {setLanguageSub} setSelectedSet={setSelectedSet}/>
+          <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
           </div>
       },
       {
         path: "/courses",
         element: 
         <div>
-          <NavBar />
+        <NavBar languageApp={languageApp}/>
         <Course languageApp = {languageApp} languageTitles = {languageTitles} setLanguageTitles={setLanguageTitles} languageSub = {languageSub} setFlashGet = {setFlashGet}/>
-        <Footer languageApp={languageApp}/>
+        <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
         </div>
       },
       {
         path: "/flashcards",
         element: 
         <div>
-          <NavBar />
+          <NavBar languageApp={languageApp}/>
           <Flashcard languageApp = {languageApp} flashGet = {flashGet} selectedSet={selectedSet} setSelectedSet={setSelectedSet}/>
-          <Footer languageApp={languageApp}/>
+          <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
           </div>
       },
       {
         path: "/flashcardset",
         element: 
         <div>
-          <NavBar />
-          <FlashcardSet languageApp = {languageApp} selectedSet={selectedSet} setSelectedSet={setSelectedSet}/>
-          <Footer languageApp={languageApp}/>
+          <NavBar languageApp={languageApp}/>
+          <FlashcardSet languageApp = {languageApp} selectedSet={selectedSet} setSelectedSet={setSelectedSet} user = {user}/>
+          <Footer languageApp={languageApp} setLanguageApp={setLanguageApp}/>
           </div>
       }
   ]);
@@ -151,3 +153,25 @@ const [selectedSet, setSelectedSet] = useState(null);
 }
 
 export default App;
+const translations = {
+  "en-US": ["404 not found"],
+  "de-DE": ["404 nicht gefunden"],
+  "fr-FR": ["404 non trouvé"],
+  "cn": ["404 找不到页面"],
+  "ja": ["404 ページが見つかりません"],
+  "pl": ["404 nie znaleziono"],
+  "es": ["404 no encontrado"],
+  "ru": ["404 страница не найдена"],
+  "pt-PT": ["404 página não encontrada"],
+  "ko": ["404 페이지를 찾을 수 없습니다"],
+  "it": ["404 pagina non trovata"],
+  "tr": ["404 sayfa bulunamadı"],
+  "nl": ["404 niet gevonden"],
+  "sv": ["404 sidan kunde inte hittas"],
+  "uk": ["404 сторінка не знайдена"],
+  "ar": ["404 الصفحة غير موجودة"],
+  "no": ["404 siden ble ikke funnet"],
+  "fi": ["404 sivua ei löytynyt"],
+  "da": ["404 siden blev ikke fundet"],
+  "cs": ["404 stránka nenalezena"]
+}

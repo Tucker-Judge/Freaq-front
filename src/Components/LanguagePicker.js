@@ -75,7 +75,7 @@ function handleGroup(lang_id){
           req.json().then((session) => {
             
               console.log(session)
-              navigate("/")
+              navigate("/languages")
           })
       }
       else{
